@@ -27,6 +27,14 @@ export class GifsService {
     this._tagsHistory.unshift(tag);
 
     this._tagsHistory = this._tagsHistory.splice(0, 10);
+    //llamamos al metodo que guarda en localStorage
+    this.saveLocalStorage();
+  }
+
+  //metodo para guardar informacion en localStorage( forma de replicar BBDD)
+  //serializo con JSON.stringify
+  private saveLocalStorage(): void {
+    localStorage.setItem('history', JSON.stringify(this._tagsHistory));
   }
 
   searchTag(tag: string): void {
