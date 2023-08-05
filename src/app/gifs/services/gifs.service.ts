@@ -11,7 +11,7 @@ export class GifsService {
   private _tagsHistory: string[] = [];
   private apiKey: string = 'c9eEQXIdX7OlsdZ5ERbcUExdlAdEfklD';
   //creo lista vacía tipo Gif de la interface
-  private gifList: Gif[] = [];
+  public gifList: Gif[] = [];
 
   get tagsHistory() {
     return [...this._tagsHistory];
@@ -43,8 +43,6 @@ export class GifsService {
       .get<SearchResponse>(`${this.serviceUrl}/search`, { params })
       .subscribe((res) => {
         this.gifList = res.data;
-
-        console.log({ gifs: this.gifList });
       });
   }
 }

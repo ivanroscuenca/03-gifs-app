@@ -10,7 +10,11 @@ export class SidebarComponent {
   //private service
   constructor(private gifsService: GifsService) {}
 
-  get tags() {
+  get tags(): string[] {
     return this.gifsService.tagsHistory;
+  }
+  //Metodo cargar etiquetas con iamgenes
+  searchTag(tag: string) {
+    this.gifsService.searchTag(tag);
   }
 }
