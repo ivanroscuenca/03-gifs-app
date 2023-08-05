@@ -6,7 +6,10 @@ import { Gif, SearchResponse } from '../interfaces/gifs.interfaces';
   providedIn: 'root',
 })
 export class GifsService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    //llamamos a cargar el loadLocalStorage en el contructor
+    this.loadLocalStorage();
+  }
   private serviceUrl: string = 'https://api.giphy.com/v1/gifs';
   private _tagsHistory: string[] = [];
   private apiKey: string = 'c9eEQXIdX7OlsdZ5ERbcUExdlAdEfklD';
@@ -35,6 +38,16 @@ export class GifsService {
   //serializo con JSON.stringify
   private saveLocalStorage(): void {
     localStorage.setItem('history', JSON.stringify(this._tagsHistory));
+  }
+
+  private loadLocalStorage(): void {
+    if (!localStorage.getItem('history')) return;
+    //deserializar con parse.operador ! para forzar que siempra va a hber un dato en history
+    this._tagsHistory = JSON.parse(localStorage.getItem('history')!);
+    //mantener historial de imagen cuando recargo
+    if (this._tagsHistory.length === 0) return;
+    //se carga la primera de la lista es decir la última que elegimos
+    this.searchTag(this._tagsHistory[0]);
   }
 
   searchTag(tag: string): void {
